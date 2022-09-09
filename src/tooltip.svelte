@@ -79,9 +79,10 @@
       component.$destroy();
       component = null;
     }
-
+ if (containerRef !== null) {
     containerRef.removeEventListener('mouseenter', onMouseEnter);
     containerRef.removeEventListener('mouseleave', onMouseLeave);
+ }
   });
 
   $: isComponent = typeof content === 'object';
