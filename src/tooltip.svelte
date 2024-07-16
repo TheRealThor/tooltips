@@ -12,6 +12,7 @@
   export let animation = '';
   export let arrow = true;
   export let autoPosition = false;
+  export let norender = false;
 
   let containerRef = null;
   let tooltipRef = null;
@@ -79,10 +80,11 @@
       component.$destroy();
       component = null;
     }
- if (containerRef !== null) {
-    containerRef.removeEventListener('mouseenter', onMouseEnter);
-    containerRef.removeEventListener('mouseleave', onMouseLeave);
- }
+
+    if (containerRef !== null) {
+      containerRef.removeEventListener('mouseenter', onMouseEnter);
+      containerRef.removeEventListener('mouseleave', onMouseLeave);
+    }
   });
 
   $: isComponent = typeof content === 'object';
@@ -94,10 +96,10 @@
     bind:this={tooltipRef}
     class="tooltip animation-{animationEffect} {position} {theme}"
     class:arrowless={!arrow}
-    class:show
+    class:show={show && !norender}
     style="min-width: {minWidth}px; max-width: {maxWidth}px; text-align: {align};"
   >
-    {#if !isComponent}
+    {#if !isComponent }
       {@html content}
     {/if}
   </div>
